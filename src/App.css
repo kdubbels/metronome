@@ -1,38 +1,90 @@
-.App {
-  text-align: center;
+.holder {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  margin: 3px;
+  border-radius: 2px;
+  background-color: #F36E6B;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* 
+.forward .holder {
+  -webkit-animation: line 3s linear infinite;
+          animation: line 3s linear infinite;
+} */
+/* .forward .holder:nth-child(0) {
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
 }
+.forward .holder:nth-child(1) {
+  -webkit-animation-delay: 0.1875s;
+          animation-delay: 0.1875s;
+}
+.forward .holder:nth-child(2) {
+  -webkit-animation-delay: 0.375s;
+          animation-delay: 0.375s;
+}
+.forward .holder:nth-child(3) {
+  -webkit-animation-delay: 0.5625s;
+          animation-delay: 0.5625s;
+}
+.forward .holder:nth-child(4) {
+  -webkit-animation-delay: 0.75s;
+          animation-delay: 0.75s;
+}
+.forward .holder:nth-child(5) {
+  -webkit-animation-delay: 0.9375s;
+          animation-delay: 0.9375s;
+}
+.forward .holder:nth-child(6) {
+  -webkit-animation-delay: 1.125s;
+          animation-delay: 1.125s;
+}
+.forward .holder:nth-child(7) {
+  -webkit-animation-delay: 1.3125s;
+          animation-delay: 1.3125s;
+}
+.forward .holder:nth-child(8) {
+  -webkit-animation-delay: 1.5s;
+          animation-delay: 1.5s;
+}
+.forward .holder:nth-child(9) {
+  -webkit-animation-delay: 1.6875s;
+          animation-delay: 1.6875s;
+}
+.forward .holder:nth-child(10) {
+  -webkit-animation-delay: 1.875s;
+          animation-delay: 1.875s;
+}
+.forward .holder:nth-child(11) {
+  -webkit-animation-delay: 2.0625s;
+          animation-delay: 2.0625s;
+}
+.forward .holder:nth-child(12) {
+  -webkit-animation-delay: 2.25s;
+          animation-delay: 2.25s;
+}
+.forward .holder:nth-child(13) {
+  -webkit-animation-delay: 2.4375s;
+          animation-delay: 2.4375s;
+}
+.forward .holder:nth-child(14) {
+  -webkit-animation-delay: 2.625s;
+          animation-delay: 2.625s;
+}
+.forward .holder:nth-child(15) {
+  -webkit-animation-delay: 2.8125s;
+          animation-delay: 2.8125s;
+}
+.forward .holder:nth-child(16) {
+  -webkit-animation-delay: 3s;
+          animation-delay: 3s;
+} */
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* @keyframes line {
+  0% {
+    background: #FCD7D6;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  30% {
+    background: #F36E6B;
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
+} */
