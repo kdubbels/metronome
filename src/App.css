@@ -88,3 +88,33 @@
     background: #F36E6B;
   }
 } */
+
+
+/* FOR THE DIAL */
+
+/* .dial {
+  display: block;
+  width: 120px;
+  height: 120px;
+  border-radius: 120px;
+  background-image: linear-gradient(#CDC4BD, #CCC3BC, #D1C4BC);
+  position: absolute;
+  top: 20px;
+  left: 35px;
+  box-shadow: 0 1px 1px 1.25px #2F2822, 0 -3px 3px #5E554E inset, 0 -5px 2px #8E857C inset, 0 0.75px 0.5px 0.25px #E1D8D1 inset, 0 -5.5px 0.5px #E1D8D1 inset, 0 27px 15px -13px rgba(27, 14, 6, 0.35), 0 1px 1px 1.5px #D7CEC7;
+}
+
+.dial .inner {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  background-color: red;
+  position: absolute;
+  top: 6px;
+  left: 40px;
+  background-image: linear-gradient(rgba(149, 140, 133, 1) 5%, rgba(149, 140, 133, 0) 40%, transparent 60%, #D6C9C3 80%, #E8D9D4, #E9D7D3), linear-gradient(#C7BEB7, #D1C6C0);
+  background-size: 100% 100%, 100% 100%;
+  background-position: 0 0, 0 0;
+  box-shadow: 0 -6px 2px -4px #E9DAD5 inset, 0 5px 4px -2px #675A52 inset;
+} */

@@ -1,15 +1,19 @@
-/** @jsxImportSource @emotion/react */
 import { useState, useEffect } from 'react';
 import { Howl } from 'howler';
-import { jsx, css, keyframes } from '@emotion/react'
+import { keyframes } from '@emotion/react'
+import styled from '@emotion/styled'
 
 import './App.css';
+
+const snare = new Howl({
+  src: './sounds/snare.wav'
+});
 
 // Example metronome
 // 
 // https://www.youtube.com/watch?v=ZK1omlZPCnY
 
-const line = keyframes`
+const lightUpAnimation = keyframes`
   0% {
     background: #FCD7D6;
   }
@@ -22,50 +26,69 @@ const line = keyframes`
 //
 // user inputs number. Divide that number (bpm) by 60, and voila!
 
-const forward = css`
-  animation: ${line} .5s linear infinite;
-    `
+const calculateBPM = (bpm) => (60/bpm) * 2;
 
-function Holder({i, setCurrentNote}) {
+// function LeftTickLight({side, setCurrentNote, isTicking, bpm}) {
+//   const TickLight = styled.span(({bpm, isTicking, i}) => ({
+//     animation: isTicking ? `${lightUpAnimation} ${calculateBPM(bpm)}s linear infinite` : 'none',
+//     animationDelay: '0s'
+//   }));
+//   return(
+//     <TickLight className='forward holder' bpm={bpm} side={side} isTicking={isTicking} onAnimationIteration={() => snare.play()}>
+//       <div className='note'>
+//         <div className='ripple'></div>
+//       </div>
+//     </TickLight>
+//   );
+// }
+
+// function RightTickLight({side, setCurrentNote, isTicking, bpm}) {
+//   const TickLight = styled.span(({bpm, isTicking, i}) => ({
+//     animation: isTicking ? `${lightUpAnimation} ${calculateBPM(bpm)}s linear infinite` : 'none',
+//     animationDelay: `${calculateBPM(bpm)/2}s`
+//   }));
+//   return(
+//     <TickLight className='forward holder' bpm={bpm} side={side} isTicking={isTicking} onAnimationIteration={() => snare.play()}>
+//       <div className='note'>
+//         <div className='ripple'></div>
+//       </div>
+//     </TickLight>
+//   );
+// }
+
+function TickLight({side, setCurrentNote, isTicking, bpm}) {
+  const TickLight = styled.span(({bpm, isTicking, i}) => ({
+    animation: isTicking ? `${lightUpAnimation} ${calculateBPM(bpm)}s linear infinite` : 'none',
+    animationDelay: side === "left" ? "0s" : `${calculateBPM(bpm)/2}s`
+  }));
   return(
-    <span className='holder' css={forward} data-note={i} onAnimationIteration={() => setCurrentNote(i)}>
+    <TickLight className='forward holder' bpm={bpm} side={side} isTicking={isTicking} onAnimationIteration={() => snare.play()}>
       <div className='note'>
         <div className='ripple'></div>
       </div>
-  </span>
-  )
+    </TickLight>
+  );
 }
 
-const notes = new Array(2).fill(null).map((x,i) => x = i);
-
-const snare = new Howl({
-  src: './sounds/snare.wav'
-});
 
 function App() {
-  const [note, setNote] = useState(null);
-  useEffect(() => {
-    if (note === 0) {
-      snare.play();
-    }
-    // if (note === 1) {
-    //   snare.play();
-    // }
-    console.warn(note);
-  }, [note])
+  const [isTicking, setIsTicking] = useState(false);
+  const [bpm, setBpm] = useState(120);
 
-  const setCurrentNote = (i) => {
-    setNote(i)
-  }
+  useEffect(() => {
+    console.log(isTicking)
+  }, [isTicking])
 
   return (
     <div className="App">
       <div className="forward">
-        {notes.map((_, i) => {
-          return <Holder i={i} setCurrentNote={setCurrentNote}/>;
-        })}
+        <TickLight side="left" isTicking={isTicking} bpm={bpm}/>
+        <TickLight side="right" isTicking={isTicking} bpm={bpm}/>
       </div>
+  <div><pre>BPM: {bpm}</pre></div>
+      <div><button onClick={() => setIsTicking(!isTicking)}>Start/Stop</button></div>
       <div>
+          <input type="range" id="bpm-dial" name="bpm-dial" min="40" max="250" onChange={(e) => setBpm(e.target.value)} />
       </div>
     </div>
   );
