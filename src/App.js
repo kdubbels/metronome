@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Howl } from 'howler';
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
+import { Button } from 'reactstrap';
 
 import './App.css';
 
@@ -25,7 +26,7 @@ const PauseIcon = function() {
   )
 }
 
-const snare = new Howl({
+const tick = new Howl({
   src: './sounds/snare.wav'
 });
 
@@ -39,6 +40,7 @@ const lightUpAnimation = keyframes`
   }
   30% {
     background: #F36E6B;
+    transform: scale(1.1);
   }
 `
 
@@ -54,7 +56,7 @@ function TickLight({side, setCurrentNote, isTicking, bpm}) {
     animationDelay: side === "left" ? "0s" : `-${calculateBPM(bpm)/2}s`
   }));
   return(
-    <TickLight className='forward holder' bpm={bpm} side={side} isTicking={isTicking} onAnimationIteration={() => snare.play()}>
+    <TickLight className='forward holder' bpm={bpm} side={side} isTicking={isTicking} onAnimationIteration={() => tick.play()}>
       <div className='note'>
         <div className='ripple'></div>
       </div>
@@ -64,7 +66,7 @@ function TickLight({side, setCurrentNote, isTicking, bpm}) {
 
 function App() {
   const [isTicking, setIsTicking] = useState(false);
-  const [bpm, setBpm] = useState('');
+  const [bpm, setBpm] = useState(100);
 
   useEffect(() => {
     console.log(isTicking)
@@ -77,9 +79,27 @@ function App() {
         <TickLight side="right" isTicking={isTicking} bpm={bpm}/>
       </div>
   <div><pre>BPM: {bpm}</pre></div>
-  <div><button onClick={() => setIsTicking(!isTicking)}>{isTicking ? <PauseIcon /> : <PlayIcon/> }</button></div>
+  <div><Button onClick={() => setIsTicking(!isTicking)}>{isTicking ? <PauseIcon /> : <PlayIcon/> }</Button></div>
       <div>
           <input type="range" id="bpm-dial" name="bpm-dial" min="0" max="210" step="1" onChange={(e) => setBpm(Number(e.target.value) + 40)} />
+      </div>
+
+      <div>
+        <input type="range" list="tickmarks" />
+
+        <datalist id="tickmarks">
+          <option value="0" label="0%"></option>
+          <option value="10"></option>
+          <option value="20"></option>
+          <option value="30"></option>
+          <option value="40"></option>
+          <option value="50" label="50%"></option>
+          <option value="60"></option>
+          <option value="70"></option>
+          <option value="80"></option>
+          <option value="90"></option>
+          <option value="100" label="100%"></option>
+        </datalist>
       </div>
     </div>
   );
