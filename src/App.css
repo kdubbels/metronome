@@ -1,8 +1,175 @@
-.holder {
-  display: inline-block;
-  height: 24px;
-  width: 24px;
-  margin: 3px;
-  border-radius: 2px;
-  background-color: #F36E6B;
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  margin: -8px;
+  background: #e0e5ec;
+  text-shadow:
+  -7px -7px 20px 0px #fff9,
+  -4px -4px 5px 0px #fff9,
+  7px 7px 20px 0px #0002,
+  4px 4px 5px 0px #0001;
 }
+
+.App {
+  z-index: 0;
+  display:flex;
+}
+
+.container {
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+  height: 180px;
+  width: 350px;
+  position: relative;
+  box-shadow: -7px -7px 20px 0px #fff9, -4px -4px 5px 0px #fff9, 7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001, inset 0px 0px 0px 0px #fff9, inset 0px 0px 0px 0px #0001, inset 0px 0px 0px 0px #fff9, inset 0px 0px 0px 0px #0001;
+  transition: box-shadow 0.6s cubic-bezier(.79,.21,.06,.81);
+  border-radius: 10px;
+}
+
+
+.bpm-container {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  color: #666;
+}
+
+.holder {
+  display: inline-flex;
+  height: 50px;
+  width: 50px;
+  border-width: 0;
+  border-radius: 3px;
+  box-shadow:
+  -7px -7px 20px 0px #fff9,
+  -4px -4px 5px 0px #fff9,
+  7px 7px 20px 0px #0002,
+  4px 4px 5px 0px #0001;
+}
+
+.button {
+  height: 50px;
+  width: 50px;
+  border-width: 0;
+  border-radius: 3px;
+  background: #e0e5ec;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  transition:box-shadow 0.6s cubic-bezier(.79,.21,.06,.81);
+  font-size: 26px;
+  color: #666;
+  text-decoration: none;
+}
+
+  .button:hover{
+    /* background: radial-gradient(circle,  #0ff 0%, #e0e5ec 60%);
+    color: rgba(102,102,102,.5); 
+    animation: colorchange 3s linear infinite; */
+  }
+  .button:active{
+    box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+                -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+      inset -4px -4px 6px 0 rgba(255,255,255,.5),
+      inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+  }
+
+  .pressed {
+    box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+                -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+      inset -4px -4px 6px 0 rgba(255,255,255,.5),
+      inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+  }
+  
+  @keyframes colorchange {
+    to {filter: hue-rotate(360deg);}
+  }
+
+  .button-group {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .space-between {
+    justify-content: space-between;
+  }
+
+  .space-around {
+    justify-content: space-around;
+  }
+
+  button:focus {
+    outline-color: none !important;
+    outline-style: none !important;
+    outline-width: 0 !important;
+  }
+
+  .row {
+    width: 100%;
+    padding: 20px 0;
+    align-items: center;
+  }
+
+
+
+  /* slider */
+
+  input[type="range"] {
+    transition:box-shadow 0.6s cubic-bezier(.79,.21,.06,.81);
+    -webkit-appearance: none;
+    border-radius: 60px;
+    /* width: 250px; */
+    height: 10px;
+    background-color: #eee;
+    /* box-shadow: inset 2px 2px 3px 0 gray,
+      inset -1px -1px 3px 0 white; */
+    outline: none;
+  /*   overflow: hidden; */
+  box-shadow:
+  -7px -7px 20px 0px #fff9,
+  -4px -4px 5px 0px #fff9,
+  7px 7px 20px 0px #0002,
+  4px 4px 5px 0px #0001;
+  }
+
+  input[type="range"]:active {
+    box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+    -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+  inset -4px -4px 6px 0 rgba(255,255,255,.5),
+  inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #e0e5ec;
+    width: 15px;
+    height: 15px;
+    border-radius: 20px;
+    /* box-shadow: 3px 3px 5px -2px; */
+    position: relative;
+    box-shadow:
+    -7px -7px 20px 0px #fff9,
+    -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002,
+    4px 4px 5px 0px #0001;
+  }
