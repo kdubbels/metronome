@@ -38,6 +38,10 @@ const PauseIcon = function() {
 }
 
 const tick = new Howl({
+  src: './sounds/boom.wav'
+});
+
+const firstTick = new Howl({
   src: './sounds/tink.wav'
 });
 
@@ -80,27 +84,18 @@ function TickLight({side, setCurrentNote, isTicking, bpm, i, timeSignature}) {
   const calculateBPM = (bpm) => (60/bpm) * (timeSignature.length);
 
   let animationDelay;
-  // if (i === 0) {
-    // animationDelay = `-${calculateBPM(bpm)/(timeSignature.length)}s`;
-  // } else 
   if (i === 0) {
     animationDelay = `0s`;
   } else {
     animationDelay = `-${(calculateBPM(bpm)/(timeSignature.length)) * i}s`;
   }
 
-  console.log(animationDelay)
-  const animLength = (60/bpm) * (timeSignature.length)
-
-  console.log(animLength);
-
-
   const TickLight = styled.span(({bpm, isTicking}) => ({
-    animation: isTicking ? `${lightUpAnimation} ${animLength}s linear infinite` : 'none',
+    animation: isTicking ? `${lightUpAnimation} ${(60/bpm) * timeSignature.length}s linear infinite` : 'none',
     animationDelay
   }));
   return (
-    <TickLight className='forward holder' bpm={bpm} isTicking={isTicking} onAnimationIteration={() => tick.play()}>
+    <TickLight className='forward holder' bpm={bpm} isTicking={isTicking} onAnimationIteration={() => i === timeSignature.length-1 ? firstTick.play() : tick.play()}>
       <div className='note'>
         <div className='ripple'></div>
       </div>
@@ -127,15 +122,14 @@ function App() {
           </div>
 
           <div className="button-group row space-between">
-            
-            <div className={`bpm-container button ${isTicking ? 'pressed' : ''}`}>
-              <span className='bpm-span'>{bpm}</span>
-              <span className='bpm-span'>BPM</span>
-            </div>
 
-            <div className={`bpm-container button ${isTicking ? 'pressed' : ''}`}>
-              <span className='bpm-span'>{timeSignature.length}</span>
-              <span className='bpm-span'>Pulses</span>
+            <div className="display">
+              <div className="display__inner">
+                <div className="display__outer">
+                  <div className="display__value"><span>{bpm < 100 ? '0' : ''}{bpm} BPM</span>{` `}<span>{timeSignature.length}/4</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <button className={`button ${isTicking ? 'pressed' : ''}`} onClick={() => setIsTicking(!isTicking)}>{isTicking ? <PauseIcon /> : <PlayIcon/> }</button>
@@ -158,8 +152,6 @@ function App() {
           </div>
 
       </div>
-      <div className="container-waves-1"></div>
-      <div className="container-waves-2"></div>
     </div>
   );
 }
