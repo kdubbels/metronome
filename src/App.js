@@ -38,6 +38,10 @@ const PauseIcon = function() {
 }
 
 const tick = new Howl({
+  src: './sounds/boom.wav'
+});
+
+const firstTick = new Howl({
   src: './sounds/tink.wav'
 });
 
@@ -45,53 +49,53 @@ const tick = new Howl({
 // 
 // https://www.youtube.com/watch?v=ZK1omlZPCnY
 
-// const lightUpAnimation = keyframes`
-//   0% {
-//     background: #FCD7D6;
-//   }
-//   30% {
-//     background: #F36E6B;
-//     transform: scale(1.1);
-    
-//   }
-// `
-
 const lightUpAnimation = keyframes`
-  to {
-    filter: hue-rotate(360deg);
-    background: radial-gradient(circle,  #0ff 0%, #e0e5ec 60%);
-  }
+  // 5% {
+  //   filter: hue-rotate(360deg);
+  //   background: radial-gradient(circle,  #0ff 0%, #e0e5ec 60%);
+  // }
 
   0% {
+    box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+    -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.5),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+    background: rgba(116, 125, 136, .2)
+  }
+  10% {
     box-shadow:
     -7px -7px 20px 0px #fff9,
     -4px -4px 5px 0px #fff9,
     7px 7px 20px 0px #0002,
     4px 4px 5px 0px #0001;
   }
-  10% {
-    box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
-    -4px -4px 6px 0 rgba(116, 125, 136, .2), 
-    inset -4px -4px 6px 0 rgba(255,255,255,.5),
-    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+  80% {
+    background: inherit;
   }
 `
-
-
 
 // here the duration shoudl be set dynamically as the speed for the metronome
 //
 // user inputs number. Divide that number (bpm) by 60, and voila!
 
-const calculateBPM = (bpm) => (60/bpm) * 2;
 
-function TickLight({side, setCurrentNote, isTicking, bpm}) {
-  const TickLight = styled.span(({bpm, isTicking, i}) => ({
-    animation: isTicking ? `${lightUpAnimation} ${calculateBPM(bpm)}s linear infinite` : 'none',
-    animationDelay: side === "left" ? "0s" : `-${calculateBPM(bpm)/2}s`
+
+function TickLight({side, setCurrentNote, isTicking, bpm, i, timeSignature}) {
+  const calculateBPM = (bpm) => (60/bpm) * (timeSignature.length);
+
+  let animationDelay;
+  if (i === 0) {
+    animationDelay = `0s`;
+  } else {
+    animationDelay = `-${(calculateBPM(bpm)/(timeSignature.length)) * i}s`;
+  }
+
+  const TickLight = styled.span(({bpm, isTicking}) => ({
+    animation: isTicking ? `${lightUpAnimation} ${(60/bpm) * timeSignature.length}s linear infinite` : 'none',
+    animationDelay
   }));
   return (
-    <TickLight className='forward holder' bpm={bpm} side={side} isTicking={isTicking} onAnimationIteration={() => tick.play()}>
+    <TickLight className='forward holder' bpm={bpm} isTicking={isTicking} onAnimationIteration={() => i === timeSignature.length-1 ? firstTick.play() : tick.play()}>
       <div className='note'>
         <div className='ripple'></div>
       </div>
@@ -102,6 +106,7 @@ function TickLight({side, setCurrentNote, isTicking, bpm}) {
 function App() {
   const [isTicking, setIsTicking] = useState(false);
   const [bpm, setBpm] = useState(100);
+  const [timeSignature, setTimeSignature] = useState(['','','',''])
 
   useEffect(() => {
     console.log(isTicking)
@@ -111,27 +116,42 @@ function App() {
     <div className="App">
       <div className="container">
           <div className="button-group row space-between">
-            
-            <div className={`bpm-container button ${isTicking ? 'pressed' : ''}`}>
-              <span className='bpm-span'>{bpm}</span>
-              <span className='bpm-span'>BPM</span>
+            {timeSignature.map((x, i) => {
+              return <TickLight side="left" i={i} isTicking={isTicking} bpm={bpm} timeSignature={timeSignature}/>
+            }).reverse()}
+          </div>
+
+          <div className="button-group row space-between">
+
+            <div className="display">
+              <div className="display__inner">
+                <div className="display__outer">
+                  <div className="display__value"><span>{bpm < 100 ? '0' : ''}{bpm} BPM</span>{` `}<span>{timeSignature.length}/4</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            
-            <TickLight side="left" isTicking={isTicking} bpm={bpm}/>
-            <TickLight side="right" isTicking={isTicking} bpm={bpm}/>
 
             <button className={`button ${isTicking ? 'pressed' : ''}`} onClick={() => setIsTicking(!isTicking)}>{isTicking ? <PauseIcon /> : <PlayIcon/> }</button>
 
           </div>
           <div className="button-group row space-between">
               <button className="button" onClick={() => bpm > 40 ? setBpm(Number(bpm-1)) : null}><MinusIcon/></button>
-              <input type="range" id="bpm-dial" name="bpm-dial" min="40" max="250" step="1" onChange={(e) => setBpm(Number(e.target.value))} value={bpm} />
+              <div>
+                <input type="range" id="bpm-dial" name="bpm-dial" min="40" max="250" step="1" onChange={(e) => setBpm(Number(e.target.value))} value={bpm} />
+              </div>
               <button className="button" onClick={() => bpm < 250 ? setBpm(Number(bpm+1)) : null }><PlusIcon /></button>
           </div>
 
+          <div className="button-group row space-between">
+              <button className="button" onClick={() => timeSignature.length > 2 ? setTimeSignature(new Array(timeSignature.length-1).fill('')) : null}><MinusIcon/></button>
+              <div>  
+                <input type="range" id="time-signature-dial" name="time-signature-dial" min="2" max="6" step="1" onChange={(e) => setTimeSignature(new Array(Number(e.target.value)).fill(''))} value={timeSignature.length} />
+              </div>
+              <button className="button" onClick={() => timeSignature.length < 6 ? setTimeSignature(new Array(timeSignature.length+1).fill('')) : null }><PlusIcon /></button>
+          </div>
+
       </div>
-      <div className="container-waves-1"></div>
-      <div className="container-waves-2"></div>
     </div>
   );
 }
