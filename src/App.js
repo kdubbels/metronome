@@ -112,9 +112,9 @@ function App() {
       <div className="container">
           <div className="button-group row space-between">
             
-            <div className="bpm-container">
-              <div>{bpm}</div>
-            <div>BPM</div>
+            <div className={`bpm-container button ${isTicking ? 'pressed' : ''}`}>
+              <span className='bpm-span'>{bpm}</span>
+              <span className='bpm-span'>BPM</span>
             </div>
             
             <TickLight side="left" isTicking={isTicking} bpm={bpm}/>
