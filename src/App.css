@@ -21,7 +21,7 @@ body {
   justify-content: space-around;
   align-items: center;
   padding: 1rem;
-  height: 180px;
+  height: 350px;
   width: 350px;
   position: relative;
   box-shadow: -7px -7px 20px 0px #fff9, -4px -4px 5px 0px #fff9, 7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001, inset 0px 0px 0px 0px #fff9, inset 0px 0px 0px 0px #0001, inset 0px 0px 0px 0px #fff9, inset 0px 0px 0px 0px #0001;
