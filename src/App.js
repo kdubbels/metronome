@@ -45,16 +45,7 @@ const firstTick = new Howl({
   src: './sounds/tink.wav'
 });
 
-// Example metronome
-// 
-// https://www.youtube.com/watch?v=ZK1omlZPCnY
-
 const lightUpAnimation = keyframes`
-  // 5% {
-  //   filter: hue-rotate(360deg);
-  //   background: radial-gradient(circle,  #0ff 0%, #e0e5ec 60%);
-  // }
-
   0% {
     box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
     -4px -4px 6px 0 rgba(116, 125, 136, .2), 
@@ -74,11 +65,8 @@ const lightUpAnimation = keyframes`
   }
 `
 
-// here the duration shoudl be set dynamically as the speed for the metronome
-//
-// user inputs number. Divide that number (bpm) by 60, and voila!
-
-
+// here the duration should be set dynamically as the speed for the metronome
+// User inputs number. Divide that number (bpm) by 60, and voila!
 
 function TickLight({side, setCurrentNote, isTicking, bpm, i, timeSignature}) {
   const calculateBPM = (bpm) => (60/bpm) * (timeSignature.length);
