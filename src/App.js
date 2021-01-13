@@ -7,7 +7,7 @@ import './App.css';
 
 const PlusIcon = function() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-plus" viewBox="0 0 16 16">
       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
     </svg>
   )
@@ -15,7 +15,7 @@ const PlusIcon = function() {
 
 const MinusIcon = function() {
   return(
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
   )
 }
 
@@ -71,23 +71,30 @@ const lightUpAnimation = keyframes`
 function TickLight({side, setCurrentNote, isTicking, bpm, i, timeSignature}) {
   const calculateBPM = (bpm) => (60/bpm) * (timeSignature.length);
 
-  let animationDelay;
-  if (i === 0) {
-    animationDelay = `0s`;
-  } else {
-    animationDelay = `-${(calculateBPM(bpm)/(timeSignature.length)) * i}s`;
-  }
+  let animationDelay = (calculateBPM(bpm)/(timeSignature.length)) * (i) === 0 ? `0s` : `-${(calculateBPM(bpm)/(timeSignature.length)) * (i)}s`;
 
-  const TickLight = styled.span(({bpm, isTicking}) => ({
-    animation: isTicking ? `${lightUpAnimation} ${(60/bpm) * timeSignature.length}s linear infinite` : 'none',
+  const Tick = styled.span(({bpm, isTicking}) => ({
+    animation: isTicking ? `${lightUpAnimation} ${calculateBPM(bpm)}s linear infinite` : 'none',
     animationDelay
   }));
+
+  console.log(animationDelay)
+
+  const animationIteration = () => {
+    console.log(i)
+    if (i === timeSignature.length-1) {
+      firstTick.play()
+    } else {
+      tick.play();
+    }
+  }
+
   return (
-    <TickLight className='forward holder' bpm={bpm} isTicking={isTicking} onAnimationIteration={() => i === timeSignature.length-1 ? firstTick.play() : tick.play()}>
+    <Tick className='forward holder' bpm={bpm} isTicking={isTicking} onAnimationIteration={animationIteration}>
       <div className='note'>
         <div className='ripple'></div>
       </div>
-    </TickLight>
+    </Tick>
   );
 }
 
