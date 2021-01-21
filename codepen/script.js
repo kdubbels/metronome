@@ -1,30 +1,11 @@
-
-// const lightUpAnimation = EmotionReact.keyframes`
-//   0% {
-//     box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
-//     -4px -4px 6px 0 rgba(116, 125, 136, .2),
-//     inset -4px -4px 6px 0 rgba(255,255,255,.5),
-//     inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
-//     background: rgba(116, 125, 136, .2)
-//   }
-//   10% {
-//     box-shadow:
-//     -7px -7px 20px 0px #fff9,
-//     -4px -4px 5px 0px #fff9,
-//     7px 7px 20px 0px #0002,
-//     4px 4px 5px 0px #0001;
-//   }
-//   80% {
-//     background: inherit;
-//   }
-// `;
-
 const tick = new Howl({
-  src: 'https://raw.githubusercontent.com/kdubbels/metronome/main/public/sounds/boom.wav'
+  src:
+    "https://raw.githubusercontent.com/kdubbels/metronome/main/public/sounds/boom.wav"
 });
 
 const firstTick = new Howl({
-  src: 'https://raw.githubusercontent.com/kdubbels/metronome/main/public/sounds/tink.wav'
+  src:
+    "https://raw.githubusercontent.com/kdubbels/metronome/main/public/sounds/tink.wav"
 });
 
 const PlusIcon = function () {
@@ -118,7 +99,7 @@ function TickLight({ side, setCurrentNote, isTicking, bpm, i, timeSignature }) {
   const animationIteration = () => {
     console.log(i);
     if (i === timeSignature.length - 1) {
-      firstTick.play()
+      firstTick.play();
     } else {
       tick.play();
     }
@@ -126,9 +107,11 @@ function TickLight({ side, setCurrentNote, isTicking, bpm, i, timeSignature }) {
 
   const style = {
     animation: isTicking
-      ? `lightUpAnimation ${calculateBPM(bpm)}s linear ${animationDelay} infinite`
+      ? `lightUpAnimation ${calculateBPM(
+          bpm
+        )}s linear ${animationDelay} infinite`
       : "none"
-  }
+  };
 
   return (
     <span
@@ -142,7 +125,6 @@ function TickLight({ side, setCurrentNote, isTicking, bpm, i, timeSignature }) {
     </span>
   );
 }
-
 
 function App() {
   const [isTicking, setIsTicking] = React.useState(false);
