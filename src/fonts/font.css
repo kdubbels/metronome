@@ -2,7 +2,7 @@
     font-family: 'Electronica-Normal';
     src: url('Electronica-Normal.eot');
     src: url('Electronica-Normal.eot?#iefix') format('embedded-opentype'),
-         url('Electronica-Normal.svg#Electronica-Normal') format('svg'),
+         /* url('Electronica-Normal.svg#Electronica-Normal') format('svg'), */
          url('Electronica-Normal.ttf') format('truetype'),
          url('Electronica-Normal.woff') format('woff'),
          url('Electronica-Normal.woff2') format('woff2');

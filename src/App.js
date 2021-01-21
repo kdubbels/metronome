@@ -45,58 +45,96 @@ const firstTick = new Howl({
   src: './sounds/tink.wav'
 });
 
-const lightUpAnimation = keyframes`
-  0% {
-    box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
-    -4px -4px 6px 0 rgba(116, 125, 136, .2), 
-    inset -4px -4px 6px 0 rgba(255,255,255,.5),
-    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
-    background: rgba(116, 125, 136, .2)
-  }
-  10% {
-    box-shadow:
-    -7px -7px 20px 0px #fff9,
-    -4px -4px 5px 0px #fff9,
-    7px 7px 20px 0px #0002,
-    4px 4px 5px 0px #0001;
-  }
-  80% {
-    background: inherit;
-  }
-`
+// const lightUpAnimation = keyframes`
+//   0% {
+//     box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+//     -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+//     inset -4px -4px 6px 0 rgba(255,255,255,.5),
+//     inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+//     background: rgba(116, 125, 136, .2)
+//   }
+//   10% {
+//     box-shadow:
+//     -7px -7px 20px 0px #fff9,
+//     -4px -4px 5px 0px #fff9,
+//     7px 7px 20px 0px #0002,
+//     4px 4px 5px 0px #0001;
+//   }
+//   80% {
+//     background: inherit;
+//   }
+// `
 
 // here the duration should be set dynamically as the speed for the metronome
 // User inputs number. Divide that number (bpm) by 60, and voila!
 
-function TickLight({side, setCurrentNote, isTicking, bpm, i, timeSignature}) {
-  const calculateBPM = (bpm) => (60/bpm) * (timeSignature.length);
+// function TickLight({side, setCurrentNote, isTicking, bpm, i, timeSignature}) {
+//   const calculateBPM = (bpm) => (60/bpm) * (timeSignature.length);
 
-  let animationDelay = (calculateBPM(bpm)/(timeSignature.length)) * (i) === 0 ? `0s` : `-${(calculateBPM(bpm)/(timeSignature.length)) * (i)}s`;
+//   let animationDelay = (calculateBPM(bpm)/(timeSignature.length)) * (i) === 0 ? `0s` : `-${(calculateBPM(bpm)/(timeSignature.length)) * (i)}s`;
 
-  const Tick = styled.span(({bpm, isTicking}) => ({
-    animation: isTicking ? `${lightUpAnimation} ${calculateBPM(bpm)}s linear infinite` : 'none',
-    animationDelay
-  }));
+//   const Tick = styled.span(({bpm, isTicking}) => ({
+//     animation: isTicking ? `lightUpAnimation ${calculateBPM(bpm)}s linear ${animationDelay} infinite` : 'none',
+//   }));
 
-  console.log(animationDelay)
+//   console.log(animationDelay)
+
+//   const animationIteration = () => {
+//     console.log(i)
+//     if (i === timeSignature.length-1) {
+//       firstTick.play()
+//     } else {
+//       tick.play();
+//     }
+//   }
+
+//   return (
+//     <Tick className='forward holder' bpm={bpm} isTicking={isTicking} onAnimationIteration={animationIteration}>
+//       <div className='note'>
+//         <div className='ripple'></div>
+//       </div>
+//     </Tick>
+//   );
+// }
+
+function TickLight({ side, setCurrentNote, isTicking, bpm, i, timeSignature }) {
+  const calculateBPM = (bpm) => (60 / bpm) * timeSignature.length;
+
+  let animationDelay =
+    (calculateBPM(bpm) / timeSignature.length) * i === 0
+      ? `0s`
+      : `-${(calculateBPM(bpm) / timeSignature.length) * i}s`;
+
+  // console.log(animationDelay);
 
   const animationIteration = () => {
-    console.log(i)
-    if (i === timeSignature.length-1) {
+    console.log(i);
+    if (i === timeSignature.length - 1) {
       firstTick.play()
     } else {
       tick.play();
     }
+  };
+
+  const style = {
+    animation: isTicking
+      ? `lightUpAnimation ${calculateBPM(bpm)}s linear ${animationDelay} infinite`
+      : "none"
   }
 
   return (
-    <Tick className='forward holder' bpm={bpm} isTicking={isTicking} onAnimationIteration={animationIteration}>
-      <div className='note'>
-        <div className='ripple'></div>
+    <span
+      className="forward holder"
+      style={style}
+      onAnimationIteration={animationIteration}
+    >
+      <div className="note">
+        <div className="ripple"></div>
       </div>
-    </Tick>
+    </span>
   );
 }
+
 
 function App() {
   const [isTicking, setIsTicking] = useState(false);
