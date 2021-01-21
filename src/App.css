@@ -160,8 +160,8 @@
     justify-content: center;
     box-shadow: inset 0rem 0.25rem 0.625rem rgba(0, 0, 0, 0.25);
     border-radius: 3px;
-    /* background: linear-gradient(108.47deg, #CCD4C6 -0.62%, #C9D3C1 25.06%, #C0CDB5 51.78%, #B3C1A7 78.51%, #AFBDA2 100%); */
   }
+  
   .display__value {
     position: relative;
     font-family: Electronica-Normal, monospace;
